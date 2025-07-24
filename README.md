@@ -20,6 +20,9 @@ Ce projet est un pipeline de scraping structuré pour extraire, nettoyer et stoc
 ---
 
 ## 📁 Arborescence du projet
+
+=======
+
 ```
 ├── data/
 │   └── books_infos.csv            # Données brutes au format CSV
@@ -46,6 +49,9 @@ Ce projet est un pipeline de scraping structuré pour extraire, nettoyer et stoc
 
 ---
 ```
+
+=======
+
 ## ⚙️ Installation
 
 1. **Cloner le dépôt :**

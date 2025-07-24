@@ -35,16 +35,21 @@ def run_scraping_pipeline(
         Nombre de livres insérés en base : 1000
         Pipeline terminé avec succès.
     """
+
+    # Scraping des données
     print("Étape 1 : Scraping des données...")
     df_raw = scrape_books(pages, base_url)
 
+    # Sauvegarde des données brutes
     print("Étape 2 : Sauvegarde des données brutes...")
     os.makedirs("data", exist_ok=True)
-    df_raw.to_csv("data/data_scraping.csv", index=False)
+    df_raw.to_csv("data/data_scraping.csv", index=True)
 
+    # Nettoyage des données
     print("Étape 3 : Nettoyage des données...")
     df_clean = process_scraping_data(df_raw)
 
+    # Création et insertion en base
     print("Étape 4 : Création et insertion en base...")
     conn = create_db(df_clean)
     insert_data(conn)
