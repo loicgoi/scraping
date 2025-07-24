@@ -1,53 +1,54 @@
+import os
 import pandas as pd
-from get_data.get_scraping_data import get_books_html
-from process_data.process_scraping_data import parse_books_html, process_scraping_data
-from database.insert_data import insert_data, create_db
-
-import pandas as pd
-from get_data.get_scraping_data import get_books_html
-from process_data.process_scraping_data import parse_books_html, process_scraping_data
-from database.insert_data import insert_data, create_db
+from get_data.get_scraping_data import scrape_books
+from process_data.process_scraping_data import process_scraping_data
+from database.insert_data import create_db, insert_data
 
 def run_scraping_pipeline(
     pages: int = 5,
     base_url: str = "http://books.toscrape.com/catalogue/page-{}.html"
 ) -> pd.DataFrame:
     """
-    Exécute les fonctions pour extraire les données du site sur plusieurs pages,
-    les traiter et les insérer dans la base de données.
+    Pipeline complet de scraping, nettoyage et insertion des données de livres.
+
+    Étapes :
+    1. Scraping des données sur plusieurs pages
+    2. Sauvegarde des données brutes dans `data/data_scraping.csv`
+    3. Nettoyage et conversion des types
+    4. Insertion des données dans une base SQLite
+    5. Affichage du nombre de livres insérés
 
     Args:
-        pages (int): Nombre de pages à scraper (par défaut 5).
-        base_url (str): URL avec {} pour numéro de page (modifiable).
+        pages (int, optional): Nombre de pages à scraper. Par défaut 5.
+        base_url (str, optional): URL avec placeholder `{}` pour le numéro de page.
+                                  Par défaut : "http://books.toscrape.com/catalogue/page-{}.html"
 
     Returns:
-        pd.DataFrame: Un DataFrame contenant les données extraites du site.
+        pd.DataFrame: DataFrame final nettoyé et prêt à être utilisé.
+
+    Exemple:
+        >>> df = run_scraping_pipeline(pages=3)
+        Étape 1 : Scraping des données...
+        Étape 2 : Sauvegarde des données brutes...
+        Étape 3 : Nettoyage des données...
+        Étape 4 : Création et insertion en base...
+        Nombre de livres insérés en base : 1000
+        Pipeline terminé avec succès.
     """
+    print("Étape 1 : Scraping des données...")
+    df_raw = scrape_books(pages, base_url)
 
-    df_list = []
+    print("Étape 2 : Sauvegarde des données brutes...")
+    os.makedirs("data", exist_ok=True)
+    df_raw.to_csv("data/data_scraping.csv", index=False)
 
-    print("Étape 1 : Récupération du HTML sur plusieurs pages...")
-    for page_num in range(1, pages + 1):
-        url = base_url.format(page_num)
-        print(f" - Page {page_num} : {url}")
-        soup = get_books_html(url)
-        df_page = parse_books_html(soup)
-        df_list.append(df_page)
+    print("Étape 3 : Nettoyage des données...")
+    df_clean = process_scraping_data(df_raw)
 
-    print("Étape 2 : Concatenation des données brutes...")
-    df_books = pd.concat(df_list, ignore_index=True)
+    print("Étape 4 : Création et insertion en base...")
+    conn = create_db(df_clean)
+    insert_data(conn)
+    conn.close()
 
-    # Enregistrement local des données brutes
-    df_books.to_csv("data/books_infos.csv", index=False)
-
-    print("Étape 3 : Nettoyage et conversion des types...")
-    df_books = process_scraping_data(df_books)
-
-    print("Étape 4 : Création de la base de données...")
-    connection, df_books = create_db(df_books)
-
-    print("Étape 5 : Insertion des données en base...")
-    insert_data(connection, df_books)
-
-    print("Pipeline terminée avec succès.")
-    return df_books
+    print("Pipeline terminé avec succès.")
+    return df_clean

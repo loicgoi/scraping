@@ -1,57 +1,45 @@
 import sqlite3
 import pandas as pd
+import os
 
-# Création de la BDD
-def create_db(df_books: pd.DataFrame) -> None:
+def create_db(df_books: pd.DataFrame) -> sqlite3.Connection:
     """
-    Crée une BDD SQLite nommée book_store.db et crée une table book_store avec les données du Dataframe df_books.
+    Crée une base de données SQLite dans le dossier `database/` et insère les données
+    du DataFrame dans une table nommée `book_store`.
 
-    Parameters
-    ----------
-    df_books : pandas.DataFrame
-        Le Dataframe contenant les données du site
+    Si le dossier `database/` n'existe pas, il est créé automatiquement.
 
-    Returns
-    -------
-    connection : sqlite3.Connection
-        La connexion à la BDD book_store
-    """
-    connection = sqlite3.connect("database/book_store.db")
+    Args:
+        df_books (pd.DataFrame): DataFrame nettoyé des livres à insérer.
 
-    # On vérifie que la BDD est créée
-    print(connection.total_changes)
+    Returns:
+        sqlite3.Connection: Connexion ouverte à la base de données `book_store.db`.
 
-    # On crée une table dans la BDD avec le Dataframe
-    df_books.to_sql('book_store', connection, if_exists='replace')
-
-    return connection, df_books
-
-
-# Insérer les données
-def insert_data(connection, df_books: pd.DataFrame) -> None:
-    """
-    Insérer les données dans la base de données book_store
-
-    Parameters
-    ----------
-    df_books : pandas.DataFrame
-        Le dataframe contenant les données du site
-
-    Returns
-    -------
-    None
-
-    Notes
-    -----
-    Cette fonction permet d'insérer les données extraites du site dans la base de données.
-    Et de compter le nombre de livre dans la base de données.
+    Exemple:
+        >>> conn = create_db(df)
+        >>> conn.execute("SELECT COUNT(*) FROM book_store").fetchone()
+        (50,)
     """
 
-    # Création d'un curseur pour interagir avec la DB
-    cursor = connection.cursor()
+    os.makedirs("database", exist_ok=True)
+    conn = sqlite3.connect("database/book_store.db")
+    df_books.to_sql("book_store", conn, if_exists="replace", index=False)
+    return conn
 
-    # Exécuter la requête pour compter le nombre de livre dans la DB
+def insert_data(conn: sqlite3.Connection) -> None:
+    """
+    Affiche le nombre de livres présents dans la table `book_store` de la base SQLite.
+
+    Cette fonction permet de vérifier que l'insertion des données s'est bien déroulée.
+
+    Args:
+        conn (sqlite3.Connection): Connexion ouverte à la base de données.
+
+    Returns:
+        None
+    """
+
+    cursor = conn.cursor()
     cursor.execute("SELECT COUNT(*) FROM book_store")
-
-    # Affichage du résultat
-    print(cursor.fetchone()[0])
+    count = cursor.fetchone()[0]
+    print(f"Nombre de livres insérés en base : {count}")
