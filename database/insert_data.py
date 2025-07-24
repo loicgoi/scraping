@@ -21,9 +21,13 @@ def create_db(df_books: pd.DataFrame) -> sqlite3.Connection:
         (50,)
     """
 
+    # Création de la BDD books_infos.db dans le dossier database
     os.makedirs("database", exist_ok=True)
+
+    # Création de la BDD et insertion des données
     conn = sqlite3.connect("database/book_store.db")
-    df_books.to_sql("book_store", conn, if_exists="replace", index=False)
+    df_books.to_sql("book_store", conn, if_exists="append", index=True)
+    
     return conn
 
 def insert_data(conn: sqlite3.Connection) -> None:
@@ -39,6 +43,7 @@ def insert_data(conn: sqlite3.Connection) -> None:
         None
     """
 
+    # Exécuter la requête pour compter le nombre de livre dans la DB
     cursor = conn.cursor()
     cursor.execute("SELECT COUNT(*) FROM book_store")
     count = cursor.fetchone()[0]

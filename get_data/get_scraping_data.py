@@ -22,6 +22,8 @@ def scrape_books(pages: int, base_url: str) -> pd.DataFrame:
     Raises:
         requests.exceptions.HTTPError: Si une requête échoue.
     """
+
+    # Scraping des données sur plusieurs pages
     all_books = []
 
     for page_num in range(1, pages + 1):
@@ -30,13 +32,15 @@ def scrape_books(pages: int, base_url: str) -> pd.DataFrame:
         response.raise_for_status()
         soup = BeautifulSoup(response.content, "html.parser")
 
+        # Extraction des données des livres
         books = soup.select("article.product_pod")
         for book in books:
             title = book.h3.a["title"]
             price = book.select_one("p.price_color").text.strip()
             rating = book.p["class"][1]
             availability = book.select_one("p.instock.availability").text.strip()
-
+            
+            # Ajout des données extraites au DataFrame
             all_books.append({
                 "title": title,
                 "price": price,

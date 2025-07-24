@@ -28,14 +28,26 @@ def process_scraping_data(df_books: pd.DataFrame) -> pd.DataFrame:
         0 A Book  10.99       3          True
     """
 
+    # Conversion de title en chaîne de caractères
     df_books["title"] = df_books["title"].astype(str)
     df_books["price"] = df_books["price"].str.replace("£", "", regex=False).astype(float)
 
     def convert_availability(value):
+        """
+        Convertir la colonne availability en booléen
+
+        Args:
+            value (str): Statut du livre si disponible ou non
+
+        Returns:
+            bool: True si disponible, False sinon.
+        """
         return value == "In stock"
 
+    # Conversion de availability en booléen
     df_books["availability"] = df_books["availability"].apply(convert_availability)
 
+    # Mapping de la colonne rating
     ratings_map = {
         "One": 1,
         "Two": 2,
@@ -43,6 +55,6 @@ def process_scraping_data(df_books: pd.DataFrame) -> pd.DataFrame:
         "Four": 4,
         "Five": 5,
     }
-    df_books["rating"] = df_books["rating"].str.capitalize().map(ratings_map)
+    df_books["rating"] = df_books["rating"].map(ratings_map)  # Application du mapping de la colonne rating
 
     return df_books
