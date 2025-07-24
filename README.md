@@ -52,7 +52,6 @@ Ce projet est un pipeline de scraping structuré pour extraire, nettoyer et stoc
 ├── README.md                      # Documentation du projet
 ├── requirements.txt
 
----
 ```
 
 =======
