@@ -50,7 +50,7 @@ Ce projet est un pipeline de scraping structuré pour extraire, nettoyer et stoc
 │   └── process_scraping_data.py   # Nettoyage et typage des données (Scraping)
 ├── main.py                        # Script principal à exécuter
 ├── README.md                      # Documentation du projet
-├── requirements.txt
+└── requirements.txt
 
 ```
 
