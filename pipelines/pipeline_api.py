@@ -15,6 +15,14 @@ def run_api_pipeline(
     2. Sauvegarde CSV brute
     3. Nettoyage
     4. Insertion SQLite
+
+    Args:
+        query (str, optional): Mots clé de recherche. Defaults to "food".
+        max_results (int, optional): Nombre de livres maximum par requête. Defaults to 40.
+        min_rating (int, optional): Note minimale souhaitée. Defaults to 1.
+
+    Returns:
+        None
     """
 
     print("Requête Google Books...")
