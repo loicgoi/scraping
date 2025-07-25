@@ -90,9 +90,16 @@ Ce projet est un pipeline de scraping structuré pour extraire, nettoyer et stoc
     python main.py
 
 ## 💡 Personnalisation
+
+### Partie scraping
     Pour changer de site, modifiez base_url dans main.py. Assurez-vous que la structure HTML soit compatible avec la fonction parse_books_html().
 
     Pour scraper plus ou moins de pages, changez la valeur de pages.
+
+### Partie API
+    Pour changer de mots clés de recherche, modifiez query dans main.py.
+
+    Pour récupérer plus ou moins de résultats par requête, modifiez max_results.
 
 ## 🧪 Exemple de données extraites
     title	                    price	   rating	availability
