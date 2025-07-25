@@ -21,12 +21,24 @@ def create_db(df_books: pd.DataFrame) -> sqlite3.Connection:
         (50,)
     """
 
-    # Création de la BDD books_infos.db dans le dossier database
-    os.makedirs("database", exist_ok=True)
-
-    # Création de la BDD et insertion des données
+    # Connexion à la BDD
     conn = sqlite3.connect("database/book_store.db")
-    df_books.to_sql("book_store", conn, if_exists="append", index=True)
+    cursor = conn.cursor()
+
+    # Création manuelle de la table si elle n'existe pas
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS book_store (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT,
+            price REAL,
+            availability TEXT,
+            rating TEXT
+        )
+    """)
+    conn.commit()
+
+    # Insertion des données dans la table `book_store`
+    df_books.to_sql("book_store", conn, if_exists="append", index=False)
     
     return conn
 
