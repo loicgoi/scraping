@@ -6,4 +6,4 @@ if __name__ == "__main__":
     run_scraping_pipeline(pages=50)
 
     # Requête Google Books
-    run_api_pipeline(query="data science", max_results=40)
+    run_api_pipeline(query="food", max_results=40)
