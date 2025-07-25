@@ -19,9 +19,15 @@ def run_api_pipeline(
 
     print("Requête Google Books...")
     raw_books = search_books(
-        params={"q": query, "filter": "paid-ebooks", "maxResults": 40},
+
+        params={
+            "q": query, 
+            "filter": "paid-ebooks", 
+            "maxResults": 40,
+        },
         min_rating=min_rating,
-        desired_results=max_results
+        desired_results=max_results,
+        query=query
     )
 
     # On récupère une liste filtrée, on crée donc un dict 'fausse API' pour garder la structure actuelle

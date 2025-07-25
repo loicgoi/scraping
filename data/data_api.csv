@@ -1,17 +1,36 @@
 index,title,price,rating,availability
-0,Data Science Fundamentals and Practical Approaches,8.91,5,True
-1,Data Science For Cyber-security,84.16,1,True
-2,Trends of Data Science and Applications,147.69,5,True
-3,Data Science Job: How to become a Data Scientist,4.23,5,True
-4,"An Introduction to Data Science: Everything About AI, ML and Big Data",1.15,5,True
-5,Data Science Projects with Python,24.25,1,True
-6,Data Science from Scratch,40.08,5,True
-7,Data Science for COVID-19 Volume 1,156.14,1,True
-8,Foundations of Statistics for Data Scientists,116.05,1,True
-9,Multi- and Megavariate Data Analysis Basic Principles and Applications,62.67,5,True
-10,Data Analysis and Graphics Using R,55.41,4,True
-11,Data Analysis with Open Source Tools,30.6,4,True
-12,Handbook of Data Analysis,65.23,5,True
-13,Applied Spatial Data Analysis with R,66.05,4,True
-14,Geophysical Data Analysis,109.72,5,True
-15,Applied Functional Data Analysis,200.44,4,True
+1,Introduction to Food Engineering,78.02,5,True
+2,"Food, Energy, and Society",65.4,4,True
+3,Introduction to Food Engineering,66.45,5,True
+4,Dictionary of Japanese Food,12.65,4,True
+5,Encyclopedia of Food Microbiology,1672.0,5,True
+6,Food Of The Gods,11.99,5,True
+7,"Food, Nutrition and Hygiene - According to NEP-2020",2.18,4,True
+8,Essentials of Food Science,56.19,5,True
+9,Snack Food Technology,126.59,5,True
+10,Enzymes in Food Technology,182.99,5,True
+11,Food Processing Technology,72.74,4,True
+12,Food Engineering - Volume III,43.88,5,True
+13,Food Science,60.12,4,True
+14,The Complete Guide to Drying Foods at Home,17.87,5,True
+15,Food for Free,4.99,3,True
+16,Introduction to Food Engineering,80.13,4,True
+17,"Handbook of Food Science, Technology, and Engineering - 4 Volume Set",2278.8,5,True
+18,Food,26.38,5,True
+19,Food,26.38,5,True
+20,Food and Healing,4.95,5,True
+21,Saveur: The New Comfort Food,18.98,5,True
+22,Food Powders,126.59,3,True
+23,A Framework for Assessing Effects of the Food System,58.18,4,True
+24,Advances in Deep-Fat Frying of Foods,274.3,5,True
+25,The Food Of Love,1.99,5,True
+26,Fun Food For Children,0.88,5,True
+27,Experimental Food Science,57.97,5,True
+28,Experimental Food Science,57.97,5,True
+29,Fermented Foods and Beverages of the World,211.0,5,True
+30,Soy Applications in Food,81.22,5,True
+31,Food in the Ancient World,31.99,4,True
+32,Introduction to Food Process Engineering,94.94,4,True
+33,Food Science and Food Biotechnology,369.25,5,True
+34,Adequate Food for All,65.4,4,True
+35,Chris Carmichael's Food for Fitness,4.95,2,True
