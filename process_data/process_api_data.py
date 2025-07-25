@@ -6,6 +6,13 @@ def process_api_data(raw_json: dict) -> pd.DataFrame:
     les colonnes : index, title, price, rating, availability
     - Les lignes contenant des NULL sont supprimées
     - L'index commence après la dernière ligne du scraping
+
+    Args:
+        raw_json (dict): Dictionnaire contenant les données brutes de Google Books
+
+    Returns:
+        pd.DataFrame: DataFrame nettoyé contenant les colonnes :
+            index, title, price, rating, availability
     """
 
     # Extraire les données
