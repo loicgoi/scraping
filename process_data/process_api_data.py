@@ -19,8 +19,11 @@ def process_api_data(raw_json: dict) -> pd.DataFrame:
 
         title = volume_info.get("title")
         price = sale_info.get("listPrice", {}).get("amount")
-        rating = volume_info.get("averageRating", 0)
+        rating = volume_info.get("averageRating")
         availability = sale_info.get("saleability") == "FOR_SALE"
+
+        if title is None:
+            continue # Passer au livre suivant si le titre est manquant
 
         books.append({
             "title": title,
@@ -32,14 +35,10 @@ def process_api_data(raw_json: dict) -> pd.DataFrame:
     # Créer le DataFrame
     df = pd.DataFrame(books)
 
-    # Supprimer les NULL
+    # Supprimer les lignes sans prix ou rating
     df = df.dropna(subset=["price", "rating"])
 
-    # Convertir les types
-    df["rating"] = df["rating"].astype(float)
-
-    # Continuer l’index après le scraping
-    last_scraping_idx = 999  # on sait que le scraping s’arrête à 999
-    df.index = range(last_scraping_idx + 1, last_scraping_idx + 1 + len(df))
+    # Convertir rating en int (en arrondissant ou tronquant)
+    df["rating"] = df["rating"].astype(int)
 
     return df

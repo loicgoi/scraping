@@ -55,6 +55,6 @@ def process_scraping_data(df_books: pd.DataFrame) -> pd.DataFrame:
         "Four": 4,
         "Five": 5,
     }
-    df_books["rating"] = df_books["rating"].map(ratings_map)  # Application du mapping de la colonne rating
+    df_books["rating"] = df_books["rating"].map(ratings_map).astype(int)  # Application du mapping de la colonne rating
 
     return df_books
